@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的私人档案</title>
+    <style>
+        /* 这里是CSS区域，负责让网页变好看 */
+        
+        /* 全局设定：淡蓝色背景，白色卡片 */
+        body {
+            background-color: #f0f8ff; /* 爱丽丝蓝，很淡的蓝色 */
+            font-family: '微软雅黑', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            justify-content: center; /* 内容居中 */
+        }
+
+        /* 这是一个“容器”，限制内容不要太宽 */
+        .container {
+            width: 90%;
+            max-width: 800px; /* 电脑上最宽800像素 */
+            background-color: white;
+            min-height: 100vh; /* 最小高度占满屏幕 */
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(173, 216, 230, 0.5); /* 淡淡的蓝色阴影 */
+            display: none; /* 默认隐藏，输对密码才显示 */
+        }
+
+        /* 标题样式 */
+        h1 {
+            color: #4682b4; /* 钢蓝色 */
+            text-align: center;
+            border-bottom: 2px solid #e6f2ff;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            color: #5f9ea0;
+            margin-top: 40px;
+            font-size: 1.2em;
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 8px; /* 圆角 */
+        }
+
+        /* 进度条区域 */
+        .progress-box {
+            margin: 20px 0;
+        }
+        .progress-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .progress-bar-bg {
+            background-color: #eee;
+            border-radius: 10px;
+            height: 15px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            background-color: #87ceeb; /* 天蓝色 */
+            height: 100%;
+            width: 0%; /* 初始宽度，后面填 */
+            transition: width 1s ease-in-out; /* 动画效果 */
+        }
+
+        /* 隐私遮罩层（密码锁） */
+        #lock-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+        
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 200px;
+        }
+        
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4682b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* 底部访问量 */
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #aaa;
+            border-top: 1px dashed #ddd;
+            padding-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen">
+        <h2 style="background:none;">🔒 私人领域</h2>
+        <p>请输入访问密钥</p>
+        <input type="password" id="passwordInput" placeholder="请输入密码">
+        <button onclick="checkPassword()">进入</button>
+    </div>
+
+    <div class="container" id="main-content">
+        <h1>📑 人生档案 | Life Archive</h1>
+
+        <p>这里是我的数字花园。记录我的生活、思考和瞬间。</p>
+        <p><strong>当前状态：</strong> 🟢 正在学习编程中...</p>
+
+        <h2>⏳ 人生进度</h2>
+        
+        <div class="progress-box">
+            <div class="progress-label">2026年 进度 (8.5%)</div> <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 8.5%;"></div>
+            </div>
+        </div>
+
+        <div class="progress-box">
+            <div class="progress-label">编程技能熟练度 (Lv.1)</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 15%;"></div>
+            </div>
+        </div>
+
+        <h2>📷 瞬间</h2>
+        <div style="background-color: #f9f9f9; padding: 20px; text-align: center; border-radius: 10px; color: #aaa;">
+            （这里可以放你的照片，稍后我教你怎么放）
+            <br>
+            🖼️ [照片占位符]
+        </div>
+
+        <h2>📝 最近的想法</h2>
+        <ul>
+            <li>今天学会了如何搭建网页！</li>
+            <li>觉得淡蓝色的配色真的很舒服。</li>
+            <li>下一步想学怎么放真的照片进去。</li>
+        </ul>
+
+        <div class="footer">
+            访问量：<span id="busuanzi_value_site_pv">...</span> 次
+            <br>
+            © 2026 My Life Archive
+        </div>
+
+    </div>
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <script>
+        // 这里是JS区域，处理逻辑
+        
+        function checkPassword() {
+            var password = document.getElementById("passwordInput").value;
+            // 【重要】在这里设置你的密码，比如把 '123456' 改成你想要的
+            if (password === "123456") {
+                // 密码正确，隐藏锁屏，显示内容
+                document.getElementById("lock-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+            } else {
+                alert("密码错误，请不要乱闯哦！");
+            }
+        }
+    </script>
+</body>
+</html>
